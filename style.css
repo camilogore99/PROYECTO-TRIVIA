@@ -1,0 +1,39 @@
+body {
+  background-color: black;
+  background-image: url(https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2F66.media.tumblr.com%2F6bcead560a1971660af529f4cbfbafb5%2Ftumblr_pqdojys0rC1qa763mo1_500.gif&f=1&nofb=1);
+  height: 100%;
+  /*
+  https://i.pinimg.com/564x/55/c3/99/55c3990b2856b3bc6d9f43e261a6e0fc.jpg
+  */
+}
+.backgro {
+  background-color: black;
+  color: #2997ff;
+}
+.img1 {
+  position: relative;
+  margin-left: 15%;
+  height: 200px;
+  width: 100%;
+}
+.tittle {
+  width: 80%;
+  background-size: cover;
+}
+.styl {
+  margin-left: 30%;
+  margin-top: 18px;
+}
+.styl2 {
+  margin-left: 38%;
+  margin-top: 18px;
+  margin-bottom: 150px;
+}
+.form {
+  color: #2997ff;
+
+  background-color: black;
+}
+.center {
+  margin-left: 16%;
+}
