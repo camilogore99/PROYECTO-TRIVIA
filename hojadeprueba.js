@@ -53,7 +53,11 @@
 //       console.log(random(0,3))
 // }
 
-
+let arrayResponseCorrect = [];
+            letarrayResultResponse = [];
+            for (let i = 0; i < data.results.length; i++) {
+                  arrayResponseCorrect.push(data.results[i].correct_answer)
+            }
 
 
 

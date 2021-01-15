@@ -34,11 +34,11 @@ function getQuestion() {
 function printData(data) {
       //================GENERAR UN ARREGLO PARA LA COMPARACION DE PREGUNTAS ===========
 
-      let question =[];
-      for (let i = 0; i< data.results.length; i++) {
-            question.push([[data.results[i].correct_answer],[data.results[i].incorrect_answers[0]],[data.results[i].incorrect_answers[1]],[data.results[i].incorrect_answers[2]]]);
-      }
-      //console.log(question)
+      // let question =[];
+      // for (let i = 0; i< data.results.length; i++) {
+      //       question.push([[data.results[i].correct_answer],[data.results[i].incorrect_answers[0]],[data.results[i].incorrect_answers[1]],[data.results[i].incorrect_answers[2]]]);
+      // }
+      // //console.log(question)
 
       // ================ obtener donde quiero poner los datos =================== 
 
@@ -63,14 +63,13 @@ function printData(data) {
              //========
              let arrayresponde = [];
              arrayresponde.push(correct,incorrect1,incorrect2,incorrect3);
-             console.log(arrayresponde)
            // ====MOSTRAR MIS PREGUNTAS  EN LA PAGINA=============
             
             array1 = arrayresponde.sort(function() {return Math.random() - 0.5});
             let html3 = ``;
             for (let i = 0; i < arrayresponde.length; i++) {
                   html3 += `<div class="form-check">
-                                      <input class="form-check-input" type="radio" name="${arrayresponde[i]}" required   id="flexRadioDefault1">
+                                      <input class="form-check-input" value="${arrayresponde[i]}" type="radio" name="${correct}" required   id="flexRadioDefault1">
                                        <label class="form-check-label" for="flexRadioDefault1">
                                           ${arrayresponde[i]}
                                        </label>
@@ -88,12 +87,37 @@ function printData(data) {
       buttonQues.innerHTML = html2;
       containerData.innerHTML = html;
 
-     
+      function data4(datax){
+            getAswer(datax);
+      }
+      data4(data);
 }
+function getAswer(data) {
+      // console.log(data.results);
+      let contquestion = 0;
+      let arrayResponseCorrect = [];
+      let arrayResponse = [];
+      let inputs = document.querySelectorAll("input");
+      inputs.forEach((input) => {
+            if (input.checked) {
+                  arrayResponse.push(input.value);
+            }
+      })
+      console.log(arrayResponse)
+      for (let i = 0; i < data.results.length; i++) {
+            arrayResponseCorrect.push(data.results[i].correct_answer)
+      }
+      console.log(arrayResponseCorrect)
 
-function getAswer() {
-            alert("holaa");
-
+      for (let i = 0; i < arrayResponse.length; i++) {
+            if (arrayResponseCorrect === arrayResponse ) {
+                  contquestion += 1;
+            }
+            if (i === arrayResponse) {
+                  alert("hola")
+            }
+      }
+      
 }
 
 getCategories();
