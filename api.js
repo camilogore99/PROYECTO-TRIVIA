@@ -69,8 +69,8 @@ function printData(data) {
             let html3 = ``;
             for (let i = 0; i < arrayresponde.length; i++) {
                   html3 += `<div class="form-check">
-                                      <input class="form-check-input" value="${arrayresponde[i]}" type="radio" name="${correct}" required   id="flexRadioDefault1">
-                                       <label class="form-check-label" for="flexRadioDefault1">
+                                      <input required class="form-check-input" value='${i}' type="radio" name='${correct}' id='array1'>
+                                       <label class="form-check-label" for='array1'>
                                           ${arrayresponde[i]}
                                        </label>
                                     </div>
@@ -81,43 +81,43 @@ function printData(data) {
        //========== GENERAR EL BOTON PARA ENVIAR LAS RESPUESTAS ============
 
        let html2 = `
-       <button type="submit" onclick="getAswer()" class="btn btn-primary styl2">Enviar Respuestas </button>`;
+       <button type="submit" onclick='getAswer(${JSON.stringify(data)})' class="btn btn-primary styl2">Enviar Respuestas </button>`;
 
        //======= IMPRIMIR LOS DATOS EN EL HTML ============================
       buttonQues.innerHTML = html2;
       containerData.innerHTML = html;
 
-      function data4(datax){
-            getAswer(datax);
-      }
-      data4(data);
+      // function data4(datax){
+      //       getAswer(datax);
+      // }
+      // data4(data);
 }
 function getAswer(data) {
-      // console.log(data.results);
-      let contquestion = 0;
-      let arrayResponseCorrect = [];
-      let arrayResponse = [];
-      let inputs = document.querySelectorAll("input");
-      inputs.forEach((input) => {
-            if (input.checked) {
-                  arrayResponse.push(input.value);
-            }
-      })
-      console.log(arrayResponse)
-      for (let i = 0; i < data.results.length; i++) {
-            arrayResponseCorrect.push(data.results[i].correct_answer)
-      }
-      console.log(arrayResponseCorrect)
+      JSON.parse(data)
+      console.log(data, 'test');
+      // let contquestion = 0;
+      // let arrayResponseCorrect = [];
+      // let arrayResponse = [];
+      // let inputs = document.querySelectorAll("input");
+      // inputs.forEach((input) => {
+      //       if (input.checked) {
+      //             arrayResponse.push(input.value);
+      //       }
+      // })
+      // console.log(arrayResponse)
+      // for (let i = 0; i < data.results.length; i++) {
+      //       arrayResponseCorrect.push(data.results[i].correct_answer)
+      // }
+      // console.log(arrayResponseCorrect)
 
-      for (let i = 0; i < arrayResponse.length; i++) {
-            if (arrayResponseCorrect === arrayResponse ) {
-                  contquestion += 1;
-            }
-            if (i === arrayResponse) {
-                  alert("hola")
-            }
-      }
-      
+      // for (let i = 0; i < arrayResponse.length; i++) {
+      //       if (arrayResponseCorrect[i] === arrayResponse[i] ) {
+      //             contquestion += 1;
+      //       }
+      //       if (i === arrayResponse) {
+      //             alert(contquestion)
+      //       }
+      // }
+
 }
-
 getCategories();
