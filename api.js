@@ -32,14 +32,6 @@ function getQuestion() {
 
 }
 function printData(data) {
-      //================GENERAR UN ARREGLO PARA LA COMPARACION DE PREGUNTAS ===========
-
-      // let question =[];
-      // for (let i = 0; i< data.results.length; i++) {
-      //       question.push([[data.results[i].correct_answer],[data.results[i].incorrect_answers[0]],[data.results[i].incorrect_answers[1]],[data.results[i].incorrect_answers[2]]]);
-      // }
-      // //console.log(question)
-
       // ================ obtener donde quiero poner los datos =================== 
 
       let containerData = document.getElementById("question-container");
@@ -56,45 +48,40 @@ function printData(data) {
                                       </div>
                               </div>
                          </div>` ;
-       });
-       //=========GENERAR LAS RESPUESTAS DE MANERA DINAMICA =================
-       
-       function htmlAnswers(correct,incorrect1,incorrect2,incorrect3) {
-             //========
+       });       
+       //========== GENERAR EL BOTON PARA ENVIAR LAS RESPUESTAS ============
+
+       let html2 = `
+       <button type="submit" onclick='getAswer(${data})' class="btn btn-primary styl2">Enviar Respuestas </button>`;
+      //  console.log(JSON.stringify(data))
+
+       //======= IMPRIMIR LOS DATOS EN EL HTML ============================
+      buttonQues.innerHTML = html2;
+      containerData.innerHTML = html;
+}
+
+function htmlAnswers(correct,incorrect1,incorrect2,incorrect3) {
+             //=========GENERAR LAS RESPUESTAS DE MANERA DINAMICA =================
              let arrayresponde = [];
              arrayresponde.push(correct,incorrect1,incorrect2,incorrect3);
            // ====MOSTRAR MIS PREGUNTAS  EN LA PAGINA=============
-            
             array1 = arrayresponde.sort(function() {return Math.random() - 0.5});
             let html3 = ``;
             for (let i = 0; i < arrayresponde.length; i++) {
                   html3 += `<div class="form-check">
-                                      <input required class="form-check-input" value='${i}' type="radio" name='${correct}' id='array1'>
-                                       <label class="form-check-label" for='array1'>
+                                      <input required class="form-check-input" value='${arrayresponde[i]}' type="radio" name='${correct}' id='${arrayresponde[i]}'>
+                                       <label class="form-check-label" for='${arrayresponde[i]}'>
                                           ${arrayresponde[i]}
                                        </label>
                                     </div>
                                      `;
             }
             return html3
-      }
-       //========== GENERAR EL BOTON PARA ENVIAR LAS RESPUESTAS ============
-
-       let html2 = `
-       <button type="submit" onclick='getAswer(${JSON.stringify(data)})' class="btn btn-primary styl2">Enviar Respuestas </button>`;
-
-       //======= IMPRIMIR LOS DATOS EN EL HTML ============================
-      buttonQues.innerHTML = html2;
-      containerData.innerHTML = html;
-
-      // function data4(datax){
-      //       getAswer(datax);
-      // }
-      // data4(data);
 }
+
 function getAswer(data) {
-      JSON.parse(data)
-      console.log(data, 'test');
+      // JSON.parse(data)
+      console.log(data);
       // let contquestion = 0;
       // let arrayResponseCorrect = [];
       // let arrayResponse = [];
@@ -109,15 +96,19 @@ function getAswer(data) {
       //       arrayResponseCorrect.push(data.results[i].correct_answer)
       // }
       // console.log(arrayResponseCorrect)
+      // console.log("hasta aqui todo bien ")
 
-      // for (let i = 0; i < arrayResponse.length; i++) {
-      //       if (arrayResponseCorrect[i] === arrayResponse[i] ) {
+      // for (let x = 0; x < arrayResponseCorrect.length; x++) {
+      //       if (arrayResponseCorrect[x] === arrayResponse[x] ) {
       //             contquestion += 1;
+      //             console.log("hola otra vez");
+      //             console.log(contquestion);
       //       }
-      //       if (i === arrayResponse) {
-      //             alert(contquestion)
+      //       if (x=== arrayResponse) {
+      //             alert("hola")
       //       }
       // }
+
 
 }
 getCategories();
