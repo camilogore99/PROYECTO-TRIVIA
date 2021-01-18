@@ -1,4 +1,7 @@
-let hola22 = false;
+//========VARIABLES GLOBALES PARA LA COMPARACION DE LOS DATOS =========
+let contquestion = 0;
+let arrayResponse = [];
+let corrects = [];
 function getCategories() {
       //============OBTENGO LAS CATEGORIAS DE MI API =============
       const url = `https://opentdb.com/api_category.php`;
@@ -31,71 +34,100 @@ function printData(data) {
       let buttonQues = document.getElementById("button-question");
       //=================== GENERAR LOS DATOS================
       let html = ``;
-      data.results.forEach((element) => {
+      data.results.forEach((element,index) => {
+            //=======OBTENGO LAS PREGUNTAS CORRECTAS PARA LA COMPARACION ============
+            const getQuestionCorrect = element.correct_answer
+            corrects.push(getQuestionCorrect)
+            //=======GENERO LOS CARDS PARA LAS PREGUNTAS CON SUS RESPUESTAS =========
             html += `<div class="col-md-8 center mt-3">
                                  <div class="card backgro h-100">
                                         <div class="card-body">
                                              ${element.question}
-                                             ${htmlAnswers(element.correct_answer,element.incorrect_answers[0],element.incorrect_answers[1],element.incorrect_answers[2])}
+                                             ${htmlAnswers(element.correct_answer,element.incorrect_answers[0],element.incorrect_answers[1],element.incorrect_answers[2], index,element)}
                                       </div>
                               </div>
                          </div>` ;
        });       
        //========== GENERAR EL BOTON PARA ENVIAR LAS RESPUESTAS ============
        let html2 = `
-       <button type="submit" onclick='getAswer(${(JSON.stringify(data.results))})' class="btn btn-primary styl2">Enviar Respuestas </button>`;
-      //  console.log(JSON.stringify(data))
+       <button type="submit" onclick='getAswer()' class="btn btn-primary styl2">Enviar Respuestas </button>`;
        //======= IMPRIMIR LOS DATOS EN EL HTML ============================
       buttonQues.innerHTML = html2;
       containerData.innerHTML = html;
-      getAswer(data.results);
-      console.log(data.results)
-      hola22 = true;
 }
-function htmlAnswers(correct,incorrect1,incorrect2,incorrect3) {
-             //=========GENERAR LAS RESPUESTAS DE MANERA DINAMICA =================
-             let arrayresponde = [];
-             arrayresponde.push(correct,incorrect1,incorrect2,incorrect3);
-           // ====MOSTRAR MIS PREGUNTAS  EN LA PAGINA=============
-            array1 = arrayresponde.sort(function() {return Math.random() - 0.5});
-            let html3 = ``;
-            for (let i = 0; i < arrayresponde.length; i++) {
-                  html3 += `<div class="form-check">
-                                      <input required class="form-check-input" value='${arrayresponde[i]}' type="radio" name='${correct}' id='${arrayresponde[i]}'>
-                                       <label class="form-check-label" for='${arrayresponde[i]}'>
+function htmlAnswers(correct,incorrect1,incorrect2,incorrect3,index,element) {
+      console.log(element.type);
+      let typequestion = element.type
+       //=========GENERAR LAS RESPUESTAS DE MANERA DINAMICA =================
+       let arrayresponde = [];
+       arrayresponde.push(correct,incorrect1,incorrect2,incorrect3);
+       console.log(arrayresponde);
+      // ====MOSTRAR MIS PREGUNTAS  EN LA PAGINA=============
+       let html3 = ``;
+             array1 = arrayresponde.sort(function() {return Math.random() - 0.5});
+             for (let i = 0; i < arrayresponde.length; i++) {
+                    if (typequestion =="multiple") {
+                              html3 += `<div class="form-check">
+                   <input required class="form-check-input" value='${arrayresponde[i]}' type="radio" name='${arrayresponde[i]+index}' id='${arrayresponde[i]+index}'>
+                   <label class="form-check-label" for='${arrayresponde[i]+index}'>
+                                          ${arrayresponde[i]}
+                                       </label>
+                                     `;
+                    }
+                     if (typequestion == "boolean") {
+                           //=======GENERO LAS RESPUESTAS DE TRUE O FALSE=============
+                         html3 += `<div class="form-check">
+                                      <input required class="form-check-input" value='${arrayresponde[i]+index }}' type="radio" name='${arrayresponde[i]+index }' id='${arrayresponde[i]+index }}'>
+                                       <label class="form-check-label" for='${arrayresponde[i]+index }'>
                                           ${arrayresponde[i]}
                                        </label>
                                     </div>
-                                     `;
-            }
-            return html3;
-}
-function getAswer(data) {
-      // JSON.parse(data.results)
-       console.log(data);
-      let contquestion = 0;
-      let arrayResponseCorrect = [];
-      let arrayResponse = [];
+                                     `;     
+                     }       
+                  }
+                  return html3;
+  }
+  
+
+function getAswer() {
+      //======= RECIBO LOS INOUTS DE LAS RESOUESTAS QUE SELECCIONO ===========
       let inputs = document.querySelectorAll("input");
       inputs.forEach((input) => {
             if (input.checked) {
                   arrayResponse.push(input.value);
             }
       })
-      //console.log(arrayResponse)
-      for (let i = 0; i < data.length; i++) {
-            arrayResponseCorrect.push(data[i].correct_answer)
-            console.log("===============")
-            console.log(arrayResponseCorrect);
-      }
-      for (let x = 0; x < arrayResponseCorrect.length; x++) {
-            if (arrayResponseCorrect[x] === arrayResponse[x] ) {
-                  contquestion += 1;
+//=======COMPARO LAS PREGUNTAS CORRECTAS ==========
+     for (let i = 0; i < arrayResponse.length; i++) {
+            for (let x = 0; x < corrects.length; x++) {
+                  if (arrayResponse[i] === corrects[x]) {
+                        contquestion += 1;
+                  }
             }
-            if (x=== (arrayResponseCorrect.length-1) && hola22) {
-                  alert("sacaste" +contquestion+"/"+arrayResponse.length);
-            }
-      }
-      //alert("sacaste" +arrayResponse.length+"/"+contquestion);
+     }
+     printCardResponse();
+}
+function printCardResponse() {
+      let printCard = document.getElementById("card-result");
+      let html = ``;
+      html += `<div class="result-card">
+                         <div class="row justify-content-center hola">
+                             <div class="col-md-5 center ">
+                                <div class="card" style="width: 18rem;">
+                                      <div class="card-body">
+                                           <h2 class="card-title">TU RESULTADO </h5>
+                                           <h4 class="card-subtitle mb-2 text-muted">Tu Porcentaje Es= ${(contquestion/100)}</h6>
+                                           <p class="card-text ">total =${""}${contquestion}${""}${"/"}${""}${arrayResponse.length}</p>
+                                      </div>
+                                </div>
+                          </div>
+                      </div>
+                  </div>`;
+                  printCard.innerHTML = html
+                  //location.reload() 
+                  return html
+      //=======IMPRIMO LAS RESPUESTAS QUE SACO CORRECTAS =========
+      alert("sacaste" +contquestion+ " " + "/" + " " +arrayResponse.length);
+      location.reload()
 }
 getCategories();
