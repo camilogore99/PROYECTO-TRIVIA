@@ -45,7 +45,11 @@ body {
   right: 0;
   background-color: rgba(0, 0, 0, 0.9);
 }
-
+.messege {
+  background-color: blue;
+  color: black;
+  margin: 20px;
+}
 .hola {
   margin-top: 40vh;
 }

@@ -26,7 +26,23 @@ function getQuestion() {
       const url = `https://opentdb.com/api.php?amount=${totalQuestion}&category=${totalCategories}&difficulty=${totalDifficulty}&type=${type}`;
       fetch(url)
             .then((response) => response.json())
-            .then((data) => printData(data));
+            .then((data) =>  {
+                  if (data.response_code === 1) {
+                        responseApi();
+                  }else {
+                        printData(data);
+                  }
+            });
+}
+function responseApi() {
+      let respon = document.getElementById("response-api")
+      let htmlx = `<div class="card messege">
+                         <div class="card-body">
+                            no se encontraron preguntas para esa categoria .
+                         </div>
+                    </div>
+                   `;
+      respon.innerHTML=htmlx
 }
 function printData(data) {
       // ================ obtener donde quiero poner los datos =================== 
@@ -51,7 +67,7 @@ function printData(data) {
        });       
        //========== GENERAR EL BOTON PARA ENVIAR LAS RESPUESTAS ============
        let html2 = `
-       <button type="submit" onclick='getAswer()' class="btn btn-primary styl2">Enviar Respuestas </button>`;
+       <button type="submit" onclick='getAswer()' id="button" class="btn btn-primary styl2" >Enviar Respuestas </button>`;
        //======= IMPRIMIR LOS DATOS EN EL HTML ============================
       buttonQues.innerHTML = html2;
       containerData.innerHTML = html;
@@ -67,25 +83,25 @@ function htmlAnswers(correct,incorrect1,incorrect2,incorrect3,index) {
              for (let i = 0; i < arrayresponde.length; i++) {
                     if (typequestion ==="multiple") { 
                               html3 += `<div class="form-check">
-                                      <input class="form-check-input" value='${arrayresponde[0]}' type="radio" name='${correct}' id='${arrayresponde[0]}'>
+                                      <input  class="form-check-input" value='${arrayresponde[0]}' type="radio" name='${correct}' id='${arrayresponde[0]}'>
                                        <label class="form-check-label" for='${arrayresponde[0]}'>
                                           ${arrayresponde[0]}
                                        </label>
                                     </div>
                                     <div class="form-check">
-                                      <input class="form-check-input" value='${arrayresponde[1]}' type="radio" name='${correct}' id='${arrayresponde[1]}'>
+                                      <input  class="form-check-input" value='${arrayresponde[1]}' type="radio" name='${correct}' id='${arrayresponde[1]}'>
                                        <label class="form-check-label" for='${arrayresponde[1]}'>
                                           ${arrayresponde[1]}
                                        </label>
                                     </div>
                                     <div class="form-check">      
-                                      <input class="form-check-input" value='${arrayresponde[2]}' type="radio" name='${correct}' id='${arrayresponde[2]}'>
+                                      <input  class="form-check-input" value='${arrayresponde[2]}' type="radio" name='${correct}' id='${arrayresponde[2]}'>
                                        <label class="form-check-label" for='${arrayresponde[2]}'>
                                           ${arrayresponde[2]}
                                        </label>
                                     </div>
                                     <div class="form-check">
-                                      <input class="form-check-input" value='${arrayresponde[3]}' type="radio" name='${correct}' id='${arrayresponde[3]}'>
+                                      <input  class="form-check-input" value='${arrayresponde[3]}' type="radio" name='${correct}' id='${arrayresponde[3]}'>
                                        <label class="form-check-label" for='${arrayresponde[3]}'>
                                           ${arrayresponde[3]}
                                        </label>
@@ -113,22 +129,23 @@ function htmlAnswers(correct,incorrect1,incorrect2,incorrect3,index) {
 function getAswer() {
       contquestion = 0;
       arrayResponse = [];
+
       //======= RECIBO LOS INOUTS DE LAS RESOUESTAS QUE SELECCIONO ===========
       let inputs = document.querySelectorAll("input");
       inputs.forEach((input) => {
             if (input.checked) {
                   arrayResponse.push(input.value);
+
             }
       })
 //=======COMPARO LAS PREGUNTAS CORRECTAS ==========
      for (let i = 0; i < arrayResponse.length; i++) {
                   if (arrayResponse[i] === corrects[i]) {
                         contquestion += 1;
-            }
+                  }
+                  
      }
-     console.log(contquestion);
-     console.log(corrects);
-     printCardResponse();
+     required();
 }
 function printCardResponse() {
       //=======IMPRIMO LAS RESPUESTAS QUE SACO CORRECTAS =========
@@ -151,7 +168,20 @@ function printCardResponse() {
                   printCard.innerHTML = html
                   //location.reload() 
                   return html
-
+}
+function required() {
+      let correctas = [];
+      let inputSelect = document.querySelectorAll("input");
+      inputSelect.forEach((input) => {
+            if (input.checked) {
+                  correctas.push(input.checked);
+            }
+      });
+      if (correctas.length === corrects.length) {
+            printCardResponse();
+      }else {
+            alert("responde todas las preguntas ")
+      }
 }
 function reset() {
       location.reload()
