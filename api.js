@@ -34,6 +34,9 @@ function printData(data) {
       let buttonQues = document.getElementById("button-question");
       //=================== GENERAR LOS DATOS================
       let html = ``;
+      contquestion = 0;
+      arrayResponse= [];
+      corrects = [];
       data.results.forEach((element,index) => {
             //=======OBTENGO LAS PREGUNTAS CORRECTAS PARA LA COMPARACION ============
             const getQuestionCorrect = element.correct_answer
@@ -93,14 +96,14 @@ function htmlAnswers(correct,incorrect1,incorrect2,incorrect3,index) {
                     } else {
                           //=======GENERO LAS RESPUESTAS DE TRUE O FALSE=============
                          html3 += `<div class="form-check">
-                                      <input required class="form-check-input" value='${[0][index]}' type="radio" name='${correct}' id='${[0][index]}'>
-                                       <label class="form-check-label" for='${[0][index]}'>
+                                      <input required class="form-check-input" value='False' type="radio" name='${index+1}' id='${index+10}'>
+                                       <label class="form-check-label" for='${index+10}'>
                                           ${arrayresponde[0]}
                                        </label>
                                     </div>
                                     <div class="form-check">
-                                      <input required class="form-check-input" value='${[1][index]}' type="radio" name='${correct}' id='${[1][index]}'>
-                                       <label class="form-check-label" for='${[1][index]}'>
+                                      <input required class="form-check-input" value='True' type="radio" name='${index+1}' id='${index+1}'>
+                                       <label class="form-check-label" for='${index+1}'>
                                            ${arrayresponde[1]}
                                        </label>
                                     </div>
@@ -110,6 +113,8 @@ function htmlAnswers(correct,incorrect1,incorrect2,incorrect3,index) {
   }
 }
 function getAswer() {
+      console.log(arrayResponse);
+
       //======= RECIBO LOS INOUTS DE LAS RESOUESTAS QUE SELECCIONO ===========
       let inputs = document.querySelectorAll("input");
       inputs.forEach((input) => {
@@ -119,12 +124,12 @@ function getAswer() {
       })
 //=======COMPARO LAS PREGUNTAS CORRECTAS ==========
      for (let i = 0; i < arrayResponse.length; i++) {
-            for (let x = 0; x < corrects.length; x++) {
-                  if (arrayResponse[i] === corrects[x]) {
+                  if (arrayResponse[i] === corrects[i]) {
                         contquestion += 1;
-                  }
             }
      }
+     console.log(contquestion);
+     console.log(corrects);
      printCardResponse();
 }
 function printCardResponse() {
@@ -147,5 +152,6 @@ function printCardResponse() {
                   printCard.innerHTML = html
                   //location.reload() 
                   return html
+
 }
 getCategories();
