@@ -138,7 +138,7 @@ function printCardResponse() {
                                       <div class="card-body">
                                            <h2 class="card-title">TU RESULTADO </h5>
                                            <h4 class="card-subtitle mb-2 text-muted">Tu Porcentaje Es= ${(contquestion/100)}</h6>
-                                           <p class="card-text ">total =${contquestion}${"/"}$${arrayResponse.length}</p>
+                                           <p class="card-text ">total =${contquestion}${"/"}${arrayResponse.length}</p>
                                       </div>
                                 </div>
                           </div>
