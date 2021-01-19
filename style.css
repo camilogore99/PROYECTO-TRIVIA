@@ -38,7 +38,7 @@ body {
   margin-left: 16%;
 }
 .result-card {
-  position: absolute;
+  position: fixed;
   top: 0;
   bottom: 0;
   left: 0;

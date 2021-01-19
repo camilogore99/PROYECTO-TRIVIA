@@ -34,8 +34,6 @@ function printData(data) {
       let buttonQues = document.getElementById("button-question");
       //=================== GENERAR LOS DATOS================
       let html = ``;
-      contquestion = 0;
-      arrayResponse= [];
       corrects = [];
       data.results.forEach((element,index) => {
             //=======OBTENGO LAS PREGUNTAS CORRECTAS PARA LA COMPARACION ============
@@ -69,25 +67,25 @@ function htmlAnswers(correct,incorrect1,incorrect2,incorrect3,index) {
              for (let i = 0; i < arrayresponde.length; i++) {
                     if (typequestion ==="multiple") { 
                               html3 += `<div class="form-check">
-                                      <input required class="form-check-input" value='${arrayresponde[0]}' type="radio" name='${correct}' id='${arrayresponde[0]}'>
+                                      <input class="form-check-input" value='${arrayresponde[0]}' type="radio" name='${correct}' id='${arrayresponde[0]}'>
                                        <label class="form-check-label" for='${arrayresponde[0]}'>
                                           ${arrayresponde[0]}
                                        </label>
                                     </div>
                                     <div class="form-check">
-                                      <input required class="form-check-input" value='${arrayresponde[1]}' type="radio" name='${correct}' id='${arrayresponde[1]}'>
+                                      <input class="form-check-input" value='${arrayresponde[1]}' type="radio" name='${correct}' id='${arrayresponde[1]}'>
                                        <label class="form-check-label" for='${arrayresponde[1]}'>
                                           ${arrayresponde[1]}
                                        </label>
                                     </div>
                                     <div class="form-check">      
-                                      <input required class="form-check-input" value='${arrayresponde[2]}' type="radio" name='${correct}' id='${arrayresponde[2]}'>
+                                      <input class="form-check-input" value='${arrayresponde[2]}' type="radio" name='${correct}' id='${arrayresponde[2]}'>
                                        <label class="form-check-label" for='${arrayresponde[2]}'>
                                           ${arrayresponde[2]}
                                        </label>
                                     </div>
                                     <div class="form-check">
-                                      <input required class="form-check-input" value='${arrayresponde[3]}' type="radio" name='${correct}' id='${arrayresponde[3]}'>
+                                      <input class="form-check-input" value='${arrayresponde[3]}' type="radio" name='${correct}' id='${arrayresponde[3]}'>
                                        <label class="form-check-label" for='${arrayresponde[3]}'>
                                           ${arrayresponde[3]}
                                        </label>
@@ -98,13 +96,13 @@ function htmlAnswers(correct,incorrect1,incorrect2,incorrect3,index) {
                          html3 += `<div class="form-check">
                                       <input required class="form-check-input" value='False' type="radio" name='${index+1}' id='${index+10}'>
                                        <label class="form-check-label" for='${index+10}'>
-                                          ${arrayresponde[0]}
+                                          False
                                        </label>
                                     </div>
                                     <div class="form-check">
                                       <input required class="form-check-input" value='True' type="radio" name='${index+1}' id='${index+1}'>
                                        <label class="form-check-label" for='${index+1}'>
-                                           ${arrayresponde[1]}
+                                           True
                                        </label>
                                     </div>
                                      `;       
@@ -113,8 +111,8 @@ function htmlAnswers(correct,incorrect1,incorrect2,incorrect3,index) {
   }
 }
 function getAswer() {
-      console.log(arrayResponse);
-
+      contquestion = 0;
+      arrayResponse = [];
       //======= RECIBO LOS INOUTS DE LAS RESOUESTAS QUE SELECCIONO ===========
       let inputs = document.querySelectorAll("input");
       inputs.forEach((input) => {
@@ -142,8 +140,9 @@ function printCardResponse() {
                                 <div class="card" style="width: 18rem;">
                                       <div class="card-body">
                                            <h2 class="card-title">TU RESULTADO </h5>
-                                           <h4 class="card-subtitle mb-2 text-muted">Tu Porcentaje Es= ${(contquestion/100)}</h6>
+                                           <h4 class="card-subtitle mb-2 text-muted">Tu Porcentaje Es= ${(100*contquestion/arrayResponse.length)}%</h6>
                                            <p class="card-text ">total =${contquestion}${"/"}${arrayResponse.length}</p>
+                                           <button onclick="reset()" type="submit" class="btn btn-primary">volver a jugar</button>
                                       </div>
                                 </div>
                           </div>
@@ -153,5 +152,8 @@ function printCardResponse() {
                   //location.reload() 
                   return html
 
+}
+function reset() {
+      location.reload()
 }
 getCategories();
